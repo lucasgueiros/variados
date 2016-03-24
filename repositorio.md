@@ -102,7 +102,7 @@ public class RepositorioClienteImplMemo // Isso quer dizer que essa classe é um
 Lá está  você fazendo aquela página de cadastro. Aí você vai tentar cadastrar um Cliente. Ele é o objeto cliente. Como você faz??
 
 ````java
-RepositorioGenerico<Cliente> repositorio = new RepositorioCliente<>();
+RepositorioGenerico<Cliente> repositorio = new RepositorioGenerico<>();
 repositorio.inserir(cliente);
 ````
 
