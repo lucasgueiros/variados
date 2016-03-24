@@ -6,7 +6,7 @@ Já que ninguém na internet sabe explicar o que é um repositório e como fazer
 
 ## O que é um repositório?
 
-É uma coisa no seu ~~programa~~ ~~software~~ sistema que GUARDA objetos. É o famoso cadastro. Tipo, você quer guardar o nome e endereço dos clientes? Faça um Repositório de Clientes! Entenda que o repositório é só a "inteface", ou seja, ela só é um canal de comunicação entre o seu programa e aquilo que realmente vai guardar o objeto.
+É uma coisa no seu ~~programa~~ ~~software~~ sistema que GUARDA objetos. É o famoso cadastro. Tipo, você quer guardar o nome e endereço dos clientes? Faça um Repositório de Clientes! Entenda que o repositório é só a __interface__, ou seja, ela só é um canal de comunicação entre o seu programa e aquilo que realmente vai guardar o objeto.
 
 Em geral você vai querer guardar num banco de dados. Os mais tradicionais gostam de um arquivo de texto. Gente viciada em Java pode querer Serializar. Mas tanto faz! O importante é guardar em algum lugar que continue intacto depois de desligar o sistema. Acontece que fazer isso dá trabalho e pode dar muitos erros, então o esquema é o seguinte:
 
@@ -43,9 +43,14 @@ Se não entendeu, me manda e-mail.
 Implemete essas interface numa classe chamada Repositorio_Tipo_Memoria (no lugar de _Tipo_ coloque a classe, eg, RepositorioClienteMemoria). Exemplo:
 
 ````java
-public class RepositorioClienteImplMemo implements RepositorioGenerico<Cliente>{
+/**
+ * @author prof. Eduardo
+ */
+public class RepositorioClienteImplMemo // Isso quer dizer que essa classe é um Repositório de objetos da Classe Cliente que os guarda na memória
+              implements RepositorioGenerico<Cliente>{ // Se você implementar um pra DB, ele funciona do mesmo jeito
 
     private List<Cliente> clientes = null;
+
     public RepositorioClienteImplMemo(){
         this.clientes = new ArrayList<>();
     }
@@ -55,6 +60,7 @@ public class RepositorioClienteImplMemo implements RepositorioGenerico<Cliente>{
         this.clientes.add(t);
     }
 
+    // copia os valores do Cliente t para um cliente com o CPF igual.
     @Override
     public void alterar(Cliente t) {
         for(Cliente c: this.clientes){
@@ -89,7 +95,15 @@ public class RepositorioClienteImplMemo implements RepositorioGenerico<Cliente>{
 }
 ````
 
-Se não entender me manda e-mail. Depois explico.
+## Criando um Repositório de Banco de Dados
 
+## Criando uma AbstractFactory para criar o repositório
 
-## Em breve, mais coisa aqui
+Lá está  você fazendo aquela página de cadastro. Aí você vai tentar cadastrar um Cliente. Ele é o objeto cliente. Como você faz??
+
+````java
+RepositorioGenerico<Cliente> repositorio = new RepositorioCliente<>();
+repositorio.inserir(cliente);
+````
+
+Agora imagina que vai ter outro código que recupera, outro que altera e por aí vai. Agora você criou outro para acessar
