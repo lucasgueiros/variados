@@ -10,11 +10,11 @@ Já que ninguém na internet sabe explicar o que é um repositório e como fazer
 
 Em geral você vai querer guardar num banco de dados. Os mais tradicionais gostam de um arquivo de texto. Gente viciada em Java pode querer Serializar. Mas tanto faz! O importante é guardar em algum lugar que continue intacto depois de desligar o sistema. Acontece que fazer isso dá trabalho e pode dar muitos erros, então o esquema é o seguinte:
 
-1 Crie uma interface repositório: isso serve para separar seu programa em duas partes: uma usa a interface e não tem a mínima ideia de onde está colocando os objetos que está guardando (já que ele joga para uma interface!)
-1 Implemente a interface para memória, ie, crie uma classe que implemente a interface e coloque os objetos na memória. Só pra enganar o sistema por enquanto.
-1 Agora faça o resto do sistema.
-1 Depois, implemente a mesma interface para usar o banco de dados.
-1 Agora troque de memória para banco de dados, e seu sistema vai estar funcionando com o BD!!!
+1. Crie uma interface repositório: isso serve para separar seu programa em duas partes: uma usa a interface e não tem a mínima ideia de onde está colocando os objetos que está guardando (já que ele joga para uma interface!)
+2. Implemente a interface para memória, ie, crie uma classe que implemente a interface e coloque os objetos na memória. Só pra enganar o sistema por enquanto.
+3. Agora faça o resto do sistema.
+4. Depois, implemente a mesma interface para usar o banco de dados.
+5. Agora troque de memória para banco de dados, e seu sistema vai estar funcionando com o BD!!!
 
 ## Criando a interface
 
