@@ -46,8 +46,10 @@ Implemete essas interface numa classe chamada Repositorio_Tipo_Memoria (no lugar
 /**
  * @author prof. Eduardo
  */
-public class RepositorioClienteImplMemo // Isso quer dizer que essa classe é um Repositório de objetos da Classe Cliente que os guarda na memória
-              implements RepositorioGenerico<Cliente>{ // Se você implementar um pra DB, ele funciona do mesmo jeito
+// Isso quer dizer que essa classe é um Repositório
+// de objetos da Classe Cliente que os guarda na memória
+public class RepositorioClienteImplMemo
+              implements RepositorioGenerico<Cliente>{ 
 
     private List<Cliente> clientes = null;
 
@@ -97,13 +99,86 @@ public class RepositorioClienteImplMemo // Isso quer dizer que essa classe é um
 
 ## Criando um Repositório de Banco de Dados
 
+Depois que seu sistema estiver funcionando apenas guardando tudo em memória, agora é a vez de colocar as coisas no Banco de Dados. Você tem duas opções, mas nas duas vocẽ vai usar algum tipo de DAO (Data Acess Object), um padrão bem legal que não vou perder meu tempo falando aqui. Aqui vou apresentar uma implementação do RepositorioCliente usando um DAO com Hibernate:
+
+````java
+import java.util.List;
+
+/**
+ * @author prof. Eduardo
+ */
+public class RepositorioClienteImplDB implements RepositorioGenerico<Cliente>{
+
+    DaoManagerHiber dao = DaoManagerHiber.getInstance();
+    
+    @Override
+    public void inserir(Cliente t) {
+        dao.persist(t);
+    }
+
+    @Override
+    public void alterar(Cliente t) {
+        dao.update(t);
+    }
+
+    @Override
+    public Cliente recuperar(int codigo) {
+        return ((Cliente)dao.recover("from Cliente where cpf="+codigo).get(0));
+    }
+
+    @Override
+    public void excluir(Cliente t) {
+        dao.delete(t);
+    }
+
+    @Override
+    public List<Cliente> recuperarTodos() {
+        return dao.recover("from Cliente");
+    }
+    
+}
+````
+
+Como você pode ver, é uma implementação bem simples com apenas dois códigos HQL. Para Hibernate é só assim mesmo. Perceba que ele usa Singleton no DAO, ou seja, todos os repositórios acessa um único DAO.
+
 ## Criando uma AbstractFactory para criar o repositório
 
 Lá está  você fazendo aquela página de cadastro. Aí você vai tentar cadastrar um Cliente. Ele é o objeto cliente. Como você faz??
 
 ````java
-RepositorioGenerico<Cliente> repositorio = new RepositorioGenerico<>();
+RepositorioGenerico<Cliente> repositorio = new RepositorioClienteImplMemporia();
 repositorio.inserir(cliente);
 ````
 
-Agora imagina que vai ter outro código que recupera, outro que altera e por aí vai. Agora você criou outro para acessar
+Agora imagina que você precisa, em outra página, adicionar um produto:
+````java
+RepositorioGenerico<Produto> repositorio = new RepositorioProdutoImplMemoria<>();
+repositorio.inserir(produto);
+````
+Em outro lugar, você insere um fornecedor:
+````java
+RepositorioGenerico<Fornecedor> repositorio = new RepositorioFornecedorImplMemoria<>();
+repositorio.inserir(fornecedor);
+````
+Agora você quer mudar pra Banco de Dados, certo? Vai ter coragem de procurar esses três lugares e mudar neles de ImplMemoria para ImplBD? Esse exemplo ainda é pequeno, mas isso pode ser um saco. Então usamos um Fabrica de Repositórios, funciona assim:
+````java
+// você quer um Repositório de Cliente
+// Para isso, é só pegar uma instância da Fabrica e pede um!:
+RepositorioGenerico<Cliente> repositorio = FabricaDeRepositorios.getInstace().getRepositorioCliente();
+// agora adicione lá 
+repositorio.insert(cliente);
+````
+Esse código não tem a menor ideia de ONDE ele está guardando (memória, banco de dados, arquivo de texto, na nuvem etc). Ele apenas confia que a Fabrica lhe dará um repositório prontinho para ele adicionar o cliente. O código da Fábrica pode ser feito de várias formas. Esse é apenas um exemplo:
+
+````java
+public class FabricaDeRepositorios {
+
+    private RepositorioGenerico<Cliente> clientes = new RepositorioClienteImplMemoria();
+
+    public RepositorioGenerico<Cliente> getRepositorioCliente() {
+        return clientes;
+    }
+    // repete algo parecido para cada classe
+}
+````
+Nesse caso, quando você quiser mudar para Banco de Dados, você só vai precisar mudar nessa classe!!
