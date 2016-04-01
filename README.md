@@ -1,4 +1,4 @@
-# variados
+# variados   ATENÇÃO= FICAR SÓ LENDO SEM AJUDAR É SACANAGEM
 Coisas variadas, ué. Tive preguiça de decorar miscellaneous.
 
 ## Coisas secretas aqui. Caiam fora! Daqui pra baixo é só prus íntimos
