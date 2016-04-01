@@ -26,9 +26,9 @@ public class Conexao {
         password = "registro_password";
     }
 
-    public boolean connectionecta(){
+    public boolean conecta(){
         try {
-            //	Class.forName("org.postgresql.Driver");
+            //Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
             return true;
         }

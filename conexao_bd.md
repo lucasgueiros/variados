@@ -88,7 +88,7 @@ public class PessoaDAO {
 ````
 
 ### Método inserir
-
+Para fazer o método inserir vou usar PreparedStatement. Nele você escreve o SQL com interrogações e depois as substitui por código de verdade
 ### Método alterar
 
 ### Método recuperarTodos
