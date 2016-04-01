@@ -3,6 +3,7 @@
 Passo a passo de como fazer conexão com banco de dados usando Java e sem Hibernate. Se quiser seguir o tutorial baixe a pasta CadastroSemBD. No cadastro a conexão já está feita. No CadastroSemBD já está tudo pronto, exceto a conexão com o Banco de Dados. Fazer conexão com o BD precisa de duas coisas: o DAO e o Repositório, que é só implementar, besteirinha!
 
 O foco dessa parte não está nos repositórios, mas sim na parte do BD!! Mais informações sobre respositórios no arquivo respositorios.md .
+Caso queira todo esse projeto na íntegra, ele está [aqui](Registro).
 
 ## Criando conexões
 
@@ -70,7 +71,28 @@ Assim, ó:
 ## Criando um DAO Manager Específico
 
 Cada DAO Manager, na forma tradicional, cuida de uma classe. Ele é quem faz as consultas, então vamos lá:
+O DAO Manager é uma classe simples, você deve querer manter uma conexão com ele, então:
 
-## Implementando métodos
+````java
+/**
+ * Created by lucas on 01/04/16.
+ */
+public class PessoaDAO {
+    private Conexao conexao;
 
-## Implementando um DAO Manager Genérico
+    public PessoaDAO() {
+        conexao = new Conexao();
+        conexao.conecta();
+    }
+}
+````
+
+### Método inserir
+
+### Método alterar
+
+### Método recuperarTodos
+
+### Método  recuperarPorNome
+
+## Implementando métodos do repositório
